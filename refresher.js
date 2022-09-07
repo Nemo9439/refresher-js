@@ -192,7 +192,7 @@
   };
 
   const scriptTag = getRefresherScriptTag();
-  const pollingIntervalInMinutes = scriptTag.getAttribute('data-polling-interval-in-minutes');
+  const pollingIntervalInMinutes = scriptTag.getAttribute('data-polling-interval-in-minutes') ?? 120;
 
   const pollingResourceSrc = getPollingResourceSrc();
 
