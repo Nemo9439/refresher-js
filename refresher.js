@@ -2,7 +2,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 
 (function () {
-  const SECOND = 1000;
+  const SECOND_IN_MS = 1000;
+  const MINUTE_IN_MS = 60 * SECOND_IN_MS;
   const DOM_ELEMENT_ID = 'refresher-js-toast';
   const SCRIPT_TAG_ID = 'refresher-js-script';
 
@@ -120,7 +121,7 @@
   openToastLater = () => {
     setTimeout(() => {
       openToast();
-    }, pollingIntervalInSeconds * SECOND);
+    }, pollingIntervalInMinutes * MINUTE_IN_MS);
   };
 
   refresh = () => {
@@ -133,7 +134,7 @@
     toastElement.classList.remove('opened');
     setTimeout(() => {
       toastElement.remove();
-    }, SECOND);
+    }, SECOND_IN_MS);
     openToastLater();
   };
 
@@ -146,7 +147,7 @@
 
     setTimeout(() => {
       toastElement.classList.add('opened');
-    }, SECOND);
+    }, SECOND_IN_MS);
   };
 
   getToastElement = () => {
@@ -191,7 +192,7 @@
   };
 
   const scriptTag = getRefresherScriptTag();
-  const pollingIntervalInSeconds = scriptTag.getAttribute('data-polling-interval-in-seconds');
+  const pollingIntervalInMinutes = scriptTag.getAttribute('data-polling-interval-in-minutes');
 
   const pollingResourceSrc = getPollingResourceSrc();
 
@@ -210,5 +211,5 @@
 
     xhttp.open('GET', pollingResourceSrc);
     xhttp.send();
-  }, pollingIntervalInSeconds * SECOND);
+  }, pollingIntervalInMinutes * MINUTE_IN_MS);
 })();
