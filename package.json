@@ -1,0 +1,28 @@
+{
+  "name": "refresher",
+  "version": "1.0.0",
+  "description": "Detects on client side that a new version of the application is available and notifying the active users to refresh their page",
+  "main": "refresher.js",
+  "scripts": {
+    "test": "test",
+    "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.min.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nemo9439/refresher-js.git"
+  },
+  "keywords": [
+    "version",
+    "update",
+    "notification",
+    "client",
+    "angular",
+    "web-application"
+  ],
+  "author": "Ohad Shivek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nemo9439/refresher-js/issues"
+  },
+  "homepage": "https://github.com/Nemo9439/refresher-js#readme"
+}

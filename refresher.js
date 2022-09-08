@@ -1,6 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-
 (function () {
   const SECOND_IN_MS = 1000;
   const MINUTE_IN_MS = 60 * SECOND_IN_MS;
@@ -192,7 +189,7 @@
   };
 
   const scriptTag = getRefresherScriptTag();
-  const pollingIntervalInMinutes = scriptTag.getAttribute('data-polling-interval-in-minutes') || 120;
+  const pollingIntervalInMinutes = scriptTag.getAttribute('data-polling-interval-in-minutes') ?? 120;
 
   const pollingResourceSrc = getPollingResourceSrc();
 
