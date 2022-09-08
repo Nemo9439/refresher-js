@@ -5,7 +5,7 @@
   "main": "refresher.js",
   "scripts": {
     "test": "test",
-    "build": "uglifyjs refresher.js > dist/refresher.min.js"
+    "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.min.js"
   },
   "repository": {
     "type": "git",
