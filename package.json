@@ -5,7 +5,9 @@
   "main": "refresher.js",
   "scripts": {
     "test": "test",
-    "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.min.js"
+    "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.min.js",
+    "start": "http-server -p 8081",
+    "angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o"
   },
   "repository": {
     "type": "git",

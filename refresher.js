@@ -23,7 +23,7 @@
                                                     stroke="black"
                                                     stroke-width="2"/>
                             </svg>
-                        <h1>New version is available</h1>
+                        <h2>New version is available</h2>
                         <p>Please refresh the page</p>
                         <div class="buttons">
                           <button class="refresh" onclick="refresh()">Refresh</button>
@@ -44,18 +44,21 @@
     element.appendChild(style);
     style.innerHTML = `
   #${DOM_ELEMENT_ID} {
-    background: white;
     position: fixed;
     display: block;
-    width: 400px;
+    width: 300px;
     bottom: 0;
     left: 20px;
     padding: 20px;
     border-radius: 5px;
+    background: #ffffffd1;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: 0.3s transform;
     border: 1px solid #efefef;
+    border-left: 5px solid #004dff;
     transform: translate(0, 100%);
+    backdrop-filter: blur(10px);
+    font-weight: lighter;
   }
 
   #${DOM_ELEMENT_ID}.opened {
@@ -90,26 +93,30 @@
     cursor: pointer;
     outline: none;
     transition: filter 0.3s;
+    font-size: 0.9rem;
   }
 
   #${DOM_ELEMENT_ID} button.refresh {
     color: #fff;
     background-color: #004dff;
-    filter: saturate(0.7)
+    filter: saturate(0.7);
+    font-size: 0.9rem;
   }
 
   #${DOM_ELEMENT_ID} button.refresh:hover {
     filter: saturate(1)
   }
 
-  #${DOM_ELEMENT_ID} h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
+  #${DOM_ELEMENT_ID} h2 {
+    font-weight: lighter;
     margin: 0;
   }
 
   #${DOM_ELEMENT_ID} p {
         margin: 0;
+        margin-top: 10px;
+        opacity: 0.8;
+        font-size: 0.9rem;
   }
 
   `;
@@ -195,6 +202,9 @@
 
   subscribeToActivityEvents();
 
+  //remove this  
+  openToast();
+
   const intervalId = setInterval(() => {
     if (getToastElement()) {
       return;
@@ -205,6 +215,7 @@
     }
 
     isUserActive = false;
+    
 
     xhttp.open('GET', pollingResourceSrc);
     xhttp.send();
