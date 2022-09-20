@@ -3,6 +3,7 @@
   const MINUTE_IN_MS = 60 * SECOND_IN_MS;
   const DOM_ELEMENT_ID = 'refresher-js-toast';
   const SCRIPT_TAG_ID = 'refresher-js-script';
+  const OPEN_TOAST_EVENT_NAME = 'refresher-js-open-toast';
   
   const DEFAULTS = {
     PRIMARY_COLOR : '#004dff',
@@ -152,7 +153,13 @@
   };
 
   openToast = () => {
+    dispatchOpenToastEvent();
+
     if (getToastElement()) {
+      return;
+    }
+    
+    if(disableToast) {
       return;
     }
 
@@ -166,6 +173,10 @@
   getToastElement = () => {
     return document.getElementById(DOM_ELEMENT_ID);
   };
+
+  dispatchOpenToastEvent = () => {
+    document.dispatchEvent(new Event(OPEN_TOAST_EVENT_NAME));
+  }
 
   getPollingResourceSrc = () => {
     const scripts = [...document.getElementsByTagName('script')];
@@ -205,11 +216,13 @@
   };
 
   const scriptTag = getRefresherScriptTag();
+
   const pollingIntervalInMinutes = Number(scriptTag.getAttribute('data-polling-interval-in-minutes')) ?? DEFAULTS.POLLING_INTERVAL_IN_MINUTES;
   const titleText = scriptTag.getAttribute('data-title-text') ?? DEFAULTS.TITLE_TEXT;
   const subTitleText = scriptTag.getAttribute('data-subtitle-text') ?? DEFAULTS.SUBTITLE_TEXT;
   const primaryColor = scriptTag.getAttribute('data-primary-color') ?? DEFAULTS.PRIMARY_COLOR;
   const refreshButtonText = scriptTag.getAttribute('data-refresh-button-text') ?? DEFAULTS.REFRESH_BUTTON_TEXT;
+  const disableToast = scriptTag.getAttribute('data-disable-toast') === 'true';
 
   const pollingResourceSrc = getPollingResourceSrc();
 
@@ -234,3 +247,5 @@
     xhttp.send();
   }, pollingIntervalInMinutes * MINUTE_IN_MS);
 })();
+
+
