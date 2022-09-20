@@ -3,6 +3,14 @@
   const MINUTE_IN_MS = 60 * SECOND_IN_MS;
   const DOM_ELEMENT_ID = 'refresher-js-toast';
   const SCRIPT_TAG_ID = 'refresher-js-script';
+  
+  const DEFAULTS = {
+    PRIMARY_COLOR : '#004dff',
+    TITLE_TEXT: 'New version is available',
+    SUBTITLE_TEXT: 'Please refresh the page',
+    REFRESH_BUTTON_TEXT: 'Refresh',
+    POLLING_INTERVAL_IN_MINUTES: 120
+  }
 
   let isUserActive = false;
 
@@ -23,10 +31,10 @@
                                                     stroke="black"
                                                     stroke-width="2"/>
                             </svg>
-                        <h2>New version is available</h2>
-                        <p>Please refresh the page</p>
+                        <h2>${titleText}</h2>
+                        <p>${subTitleText}</p>
                         <div class="buttons">
-                          <button class="refresh" onclick="refresh()">Refresh</button>
+                          <button class="refresh" onclick="refresh()">${refreshButtonText}</button>
 
                 `;
 
@@ -46,7 +54,7 @@
   #${DOM_ELEMENT_ID} {
     position: fixed;
     display: block;
-    width: 300px;
+    min-width: 150px;
     bottom: 0;
     left: 20px;
     padding: 20px;
@@ -55,7 +63,7 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: 0.3s transform;
     border: 1px solid #efefef;
-    border-left: 5px solid #004dff;
+    border-left: 5px solid ${primaryColor};
     transform: translate(0, 100%);
     backdrop-filter: blur(10px);
     font-weight: lighter;
@@ -98,8 +106,8 @@
 
   #${DOM_ELEMENT_ID} button.refresh {
     color: #fff;
-    background-color: #004dff;
-    filter: saturate(0.7);
+    background-color: ${primaryColor};
+    filter: saturate(0.8);
     font-size: 0.9rem;
   }
 
@@ -110,6 +118,7 @@
   #${DOM_ELEMENT_ID} h2 {
     font-weight: lighter;
     margin: 0;
+    padding-right: 40px;
   }
 
   #${DOM_ELEMENT_ID} p {
@@ -196,7 +205,11 @@
   };
 
   const scriptTag = getRefresherScriptTag();
-  const pollingIntervalInMinutes = scriptTag.getAttribute('data-polling-interval-in-minutes') ?? 120;
+  const pollingIntervalInMinutes = Number(scriptTag.getAttribute('data-polling-interval-in-minutes')) ?? DEFAULTS.POLLING_INTERVAL_IN_MINUTES;
+  const titleText = scriptTag.getAttribute('data-title-text') ?? DEFAULTS.TITLE_TEXT;
+  const subTitleText = scriptTag.getAttribute('data-subtitle-text') ?? DEFAULTS.SUBTITLE_TEXT;
+  const primaryColor = scriptTag.getAttribute('data-primary-color') ?? DEFAULTS.PRIMARY_COLOR;
+  const refreshButtonText = scriptTag.getAttribute('data-refresh-button-text') ?? DEFAULTS.REFRESH_BUTTON_TEXT;
 
   const pollingResourceSrc = getPollingResourceSrc();
 
