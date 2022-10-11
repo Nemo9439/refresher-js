@@ -193,7 +193,7 @@
   };
 
   handleCustomFunction = async () => {
-      const customFunctionRes = await Window[customFunctionName]();
+      const customFunctionRes = await window[customFunctionName]();
       if (customFunctionRes) {
         openToast();
         clearInterval(intervalId);
@@ -237,9 +237,6 @@
   const pollingResourceSrc = getPollingResourceSrc();
 
   subscribeToActivityEvents();
-
-  //remove this  
-  openToast();
 
   const intervalId = setInterval(async () => {
     if (getToastElement()) {
