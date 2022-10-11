@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>AngularDemoWithCustomCallback</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <script>
+      window.refresherJs_myCustomFunction = function () {
+        console.log("custom function triggered");
+        console.log("refresh when random number is 3");
+        return new Promise(function (resolve, reject) {
+          setTimeout(() => {
+            const randomNumber = Math.floor(Math.random() * 5);
+            console.log({ randomNumber });
+            resolve(randomNumber === 3);
+          }, 1000);
+        });
+      };
+    </script>
+    <script
+      id="refresher-js-script"
+      type="text/javascript"
+      src="http://127.0.0.1:8081/refresher.js"
+      data-polling-interval-in-minutes="0"
+      data-primary-color="#1976d2"
+      data-title-text="New Angular Demo version is now available"
+      data-subtitle-text="Refresh whenever you feel the spirit"
+      data-custom-function-name="refresherJs_myCustomFunction"
+      defer
+    ></script>
+  </head>
+  <body>
+    <app-root></app-root>
+  </body>
+</html>

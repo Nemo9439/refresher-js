@@ -192,6 +192,15 @@
     return document.getElementById(SCRIPT_TAG_ID);
   };
 
+  handleCustomFunction = async () => {
+      const customFunctionRes = await window[customFunctionName]();
+      if (customFunctionRes) {
+        openToast();
+        clearInterval(intervalId);
+      }
+      return;
+  }
+
   subscribeToActivityEvents = () => {
     document.onvisibilitychange = () => {
       if (document.visibilityState === 'visible') {
@@ -223,15 +232,13 @@
   const primaryColor = scriptTag.getAttribute('data-primary-color') ?? DEFAULTS.PRIMARY_COLOR;
   const refreshButtonText = scriptTag.getAttribute('data-refresh-button-text') ?? DEFAULTS.REFRESH_BUTTON_TEXT;
   const disableToast = scriptTag.getAttribute('data-disable-toast') === 'true';
+  const customFunctionName = scriptTag.getAttribute('data-custom-function-name');
 
   const pollingResourceSrc = getPollingResourceSrc();
 
   subscribeToActivityEvents();
 
-  //remove this  
-  openToast();
-
-  const intervalId = setInterval(() => {
+  const intervalId = setInterval(async () => {
     if (getToastElement()) {
       return;
     }
@@ -242,9 +249,14 @@
 
     isUserActive = false;
     
+    if(customFunctionName) {
+      return await handleCustomFunction();
+    }
 
     xhttp.open('GET', pollingResourceSrc);
     xhttp.send();
+
+
   }, pollingIntervalInMinutes * MINUTE_IN_MS);
 })();
 

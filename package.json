@@ -7,7 +7,8 @@
     "test": "test",
     "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.min.js",
     "start": "http-server -p 8081",
-    "angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o"
+    "angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o",
+    "angular-demo-custom-callback": "http-server -p 8080 demo/angular-demo-with-custom-callback/dist/angular-demo-with-custom-callback -o"
   },
   "repository": {
     "type": "git",
