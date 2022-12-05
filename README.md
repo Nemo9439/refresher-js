@@ -5,7 +5,11 @@ and notify the active users to refresh their page in order to get the fresh vers
 
   - **The problem**: 
      We noticed in my team that some of the features and bug fixes that we are deploying can take to some users few days or more to get.  
+<<<<<<< HEAD
      The reason is that some users are not closing the browser when they are done working so the new updates wouldn't take place until they refresh their page
+=======
+     The reason is that some users are not closing the browser when they are done working so the new updates wouldnt take place until they refresh their page  
+>>>>>>> da4365975b2e71dbf24a3628af66d1c4edc65de4
      and fetch the new version of the webapp.
 
 
