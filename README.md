@@ -3,6 +3,15 @@
 Detects on client side that a new version of the application is available
 and notify the active users to refresh their page in order to get the fresh version.
 
+- **The problem**: 
+- We noticed in my team that some of the features and bug fixes that we are deploying can take to some users few days or more to get,
+the reason is that some users are not closing the browser when they are done working so the new updates wouldnt take place until they refresh their page 
+and fetch the new version of the webapp.
+
+- **The solution**: 
+- A script that once in a while will detect that a new version is available and will notify the user about it.
+
+
 
 - **Technology stack**: 
   The script itself is Vanilla JS and it supports the frameworks: Angular, React and Vue.
@@ -10,7 +19,7 @@ and notify the active users to refresh their page in order to get the fresh vers
 - **Features**:
   - Installation is extremely quick and simple
   - Out of the box support for modern frameworks 
-  - User activity detection in order to avoid redundant polling
+  - User activity detection in order to avoid redundant calls to the server
   - Customization options for the notification
 
 
