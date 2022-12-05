@@ -1,4 +1,4 @@
-# Refresher JS - New version notificator
+# Refresher JS - New Version Notifier
 
 **Detects on client side that a new version of the application is available
 and notify the active users to refresh their page in order to get the fresh version**
