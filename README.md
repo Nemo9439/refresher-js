@@ -44,7 +44,6 @@ and notify the active users to refresh their page in order to get the fresh vers
 
 ## Configuration Options
   The script behavior can be configured by adding the following params to the script tag.
-
   *All of them are optional*
 
   - **data-polling-interval-in-minutes** (Number) (Default = '120'):
