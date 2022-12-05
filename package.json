@@ -8,7 +8,9 @@
     "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.latest.min.js",
     "start": "http-server -p 8081",
     "angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o",
-    "angular-demo-custom-callback": "http-server -p 8080 demo/angular-demo-with-custom-callback/dist/angular-demo-with-custom-callback -o"
+    "angular-demo-custom-callback": "http-server -p 8080 demo/angular-demo-with-custom-callback/dist/angular-demo-with-custom-callback -o",
+    "react-demo": "http-server -p 8082 demo/react-demo/build -o",
+    "vue-demo": "http-server -p 8083 demo/vue-demo/dist -o"
   },
   "repository": {
     "type": "git",

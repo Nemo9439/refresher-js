@@ -83,6 +83,7 @@
     cursor: pointer;
     opacity: 0.6;
     transition: 0.3s;
+    z-index: 999;
   }
 
   #${DOM_ELEMENT_ID} .close-btn:hover {
@@ -180,12 +181,13 @@
 
   getPollingResourceSrc = () => {
     const scripts = [...document.getElementsByTagName('script')];
+    const mainScript = scripts.filter((script) => script?.src?.includes('main.'))?.[0];
+    if (!mainScript) {
+      const appScript = scripts.filter((script) => script?.src?.includes('app.'))?.[0];
+      return appScript?.src;
+    }
 
-    const angularMainScript = scripts.filter(
-      (script) => script?.src?.includes('main.') && script?.type === 'module'
-    )?.[0];
-
-    return angularMainScript?.src;
+    return mainScript?.src;
   };
 
   getRefresherScriptTag = () => {

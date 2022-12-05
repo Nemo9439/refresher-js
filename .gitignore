@@ -36,6 +36,8 @@ _site/
 Icon?
 ehthumbs.db
 Thumbs.db
+.idea
+
 
 # Vim swap files #
 ##################
