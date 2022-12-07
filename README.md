@@ -90,6 +90,16 @@ and notify the active users to refresh their page in order to get the fresh vers
 
 -----
 
+## Checking the notification locally
+ - configurating the script as described above
+ - set the script param`data-polling-interval-in-minutes` to 0.1 (just for testing purposes)
+ - start the web application which is running the script locally
+ - open the application as a user and leave the tab opened
+ - make a code change on the codebase and perform a full build for the application , the new build should result new compiled assets with new hash codes.
+ - reopen the application tab from earlier and perform a mouse click or tab change (to simulate active user)
+ - the notification should now appear
+
+
 ## Notification with custom design
 **The script itself works with a predefined notification design , the color can be customized using the `data-primary-color` param.**  
 some applications would desire higher degree of customizations and in order to achieve that there are two options: 
