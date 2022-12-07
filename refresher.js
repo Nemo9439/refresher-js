@@ -179,8 +179,8 @@
     document.dispatchEvent(new Event(OPEN_TOAST_EVENT_NAME));
   }
 
-  getPollingResourceSrc = () => {
-    const scripts = [...document.getElementsByTagName('script')];
+  getMainScript = (doc) => {
+    const scripts = [...doc.getElementsByTagName('script')];
     const mainScript = scripts.filter((script) => script?.src?.includes('main.'))?.[0];
     if (!mainScript) {
       const appScript = scripts.filter((script) => script?.src?.includes('app.'))?.[0];
@@ -218,12 +218,15 @@
   const xhttp = new XMLHttpRequest();
 
   xhttp.onload = (data) => {
-    const status = data?.target?.status;
+    const doc = (new DOMParser).parseFromString(data.target.response, "text/html");
 
-    if (status === 404) {
+    const nextMainScript = getMainScript(doc);
+    if(currentMainScript !== nextMainScript) {
       openToast();
       clearInterval(intervalId);
+      currentMainScript = nextMainScript;
     }
+
   };
 
   const scriptTag = getRefresherScriptTag();
@@ -236,7 +239,8 @@
   const disableToast = scriptTag.getAttribute('data-disable-toast') === 'true';
   const customFunctionName = scriptTag.getAttribute('data-custom-function-name');
 
-  const pollingResourceSrc = getPollingResourceSrc();
+  const pollingResourceSrc = window.location.href;
+  let currentMainScript = getMainScript(window.document)
 
   subscribeToActivityEvents();
 
