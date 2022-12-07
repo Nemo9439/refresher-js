@@ -90,6 +90,16 @@ and notify the active users to refresh their page in order to get the fresh vers
 
 -----
 
+## Notification with custom design
+**The script itself works with a predefined notification design , the color can be customized using the `data-primary-color` param.**  
+some applications would desire higher degree of customizations and in order to achieve that there are two options: 
+  - Style overriding on the existing notifier element design by adding global styling code.
+  - Disabling the notifier and managing the custom implemented notification by listening to the   
+  `refresher-js-open-toast` as described in the previous section.
+
+
+-----
+
 ## Development
 1. [INSTALL](INSTALL.md)
 
