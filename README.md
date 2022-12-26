@@ -71,11 +71,12 @@ and notify the active users to refresh their page in order to get the fresh vers
       
       > Whenever a new version is detected a custom event (`refresher-js-open-toast`) will be triggered (regardless of the value of data-disable-toast)
 
-      *Example Usage*
+      *Example Usage In Angular*
       ``` ts
-          document.addEventListener('refresher-js-open-toast', function () {
-          console.log('refresher-js-open-toast custom event was triggered');
-        });
+        @HostListener('document:refresher-js-open-toast')
+        sendRefresherEvent(): void {
+          console.log('send analytics event');
+        }
       ``` 
 
   - **data-custom-function-name** (String - Function Name): 

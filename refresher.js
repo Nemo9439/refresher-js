@@ -108,14 +108,12 @@
     cursor: pointer;
     outline: none;
     transition: filter 0.3s;
-    font-size: 0.9rem;
   }
 
   #${DOM_ELEMENT_ID} button.refresh {
     color: #fff;
     background-color: ${primaryColor};
     filter: saturate(0.8);
-    font-size: 0.9rem;
   }
 
   #${DOM_ELEMENT_ID} button.refresh:hover {
@@ -132,7 +130,6 @@
         margin: 0;
         margin-top: 10px;
         opacity: 0.8;
-        font-size: 0.9rem;
   }
 
   `;
