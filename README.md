@@ -35,7 +35,7 @@ and notify the active users to refresh their page in order to get the fresh vers
     <script
       id="refresher-js-script"
       type="text/javascript"
-      src="https://cdn.jsdelivr.net/gh/Nemo9439/refresher-js@main/dist/refresher.v1-0.min.js"
+      src="https://cdn.jsdelivr.net/gh/Nemo9439/refresher-js@main/dist/refresher.v1-1.min.js"
       defer
     ></script>
 ```
