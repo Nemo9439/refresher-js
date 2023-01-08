@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +8,8 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'angular-demo';
 
-  constructor() {
-    document.addEventListener('refresher-js-open-toast', function () {
-      console.log('refresher-js-open-toast custom event was triggered');
-    });
+  @HostListener('document:refresher-js-open-toast')
+  sendRefresherEvent(): void {
+    console.log('send analytics event');
   }
 }
