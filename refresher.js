@@ -60,6 +60,7 @@
   #${DOM_ELEMENT_ID} {
     position: fixed;
     display: block;
+    z-index: 101;
     min-width: 150px;
     bottom: 0;
     left: 20px;
