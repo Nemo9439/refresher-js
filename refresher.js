@@ -1,3 +1,5 @@
+"use strict";
+
 (function () {
   const SECOND_IN_MS = 1000;
   const MINUTE_IN_MS = 60 * SECOND_IN_MS;
@@ -143,7 +145,7 @@
   };
 
   refresh = () => {
-    location.reload(true);
+    location.reload();
   };
 
   closeToast = () => {
