@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
-    <script
-            id="refresher-js-script"
-            type="text/javascript"
-            src="http://127.0.0.1:8081/refresher.js"
-            data-polling-interval-in-minutes="1"
-            defer
-    ></script>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vite App</title>
+  <script id="refresher-js-script" type="text/javascript" src="http://127.0.0.1:8081/refresher.js"
+    data-polling-interval-in-minutes="0.1" data-primary-color="#00bd7e" defer></script>
+  <style>
+    #refresher-js-toast.opened h2 {
+      color: #00bd7e;
+      font-weight: 600;
+    }
+
+    #refresher-js-toast {
+      color: #282828
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+
 </html>

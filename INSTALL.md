@@ -1,42 +1,33 @@
-## Installation
+# Development 
+## Installation And Configuration
 
-Detailed instructions on how to install, configure, and get the project running.
-This should be frequently tested to ensure reliability. Alternatively, link to
-a separate [INSTALL](INSTALL.md) document.
+Follow the [README](README.md)
 
-## Configuration
+## How to run the script locally during development?
+The project constains several demo applications that you can test locally on.
+Each of the applications are importing the `refresher.js` that is should be running locally.
 
-If the software is configurable, describe it in detail, either here or in other documentation to which you link.
+### Follow the steps below: 
+  - start the `refresher.js` locally
+```bash
+$ npm run start
+```
 
-## Usage
+ - start the angular-demo project locally 
+ ```bash
+$ npm run angular-demo
+```
 
-Show users how to use the software.
-Be specific.
-Use appropriate formatting when showing code snippets.
+- open the running application on your browser `http://127.0.0.1:8080/` and leave it open
 
-## How to test the software
+- perform a code change on the application  
+for example: change the version text [here](./demo/angular-demo/src/app/app.component.html)
 
-If the software includes automated tests, detail how to run those tests.
+- build the demo application locally
+ ```bash
+  $ cd demo/angular-demo
+  $ npm run build
+```
 
-## Known issues
-
-Document any known significant shortcomings with the software.
-
-## Getting help
-
-Instruct users how to get help with this software; this might include links to an issue tracker, wiki, mailing list, etc.
-
-**Example**
-
-If you have questions, concerns, bug reports, etc, please file an issue in this repository's Issue Tracker.
-
-## Getting involved
-
-This section should detail why people should get involved and describe key areas you are
-currently focusing on; e.g., trying to get feedback on features, fixing certain bugs, building
-important pieces, etc.
-
-General instructions on _how_ to contribute should be stated with a link to [CONTRIBUTING](CONTRIBUTING.md).
-
-
-----
+ - reopen the application tab from earlier and perform a mouse click or tab change (to simulate active user)
+ - the notification should now appear

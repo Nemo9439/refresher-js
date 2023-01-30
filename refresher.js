@@ -6,6 +6,11 @@
   const DOM_ELEMENT_ID = 'refresher-js-toast';
   const SCRIPT_TAG_ID = 'refresher-js-script';
   const OPEN_TOAST_EVENT_NAME = 'refresher-js-open-toast';
+
+  const ANGULAR_AND_REACT_MAIN_SCRIPT_PREFIX = 'main.';
+  const VUE_V3_MAIN_SCRIPT_PREFIX = 'index.';
+  const VUE_V2_MAIN_SCRIPT_PREFIX = 'app.';
+  
   
   const DEFAULTS = {
     PRIMARY_COLOR : '#004dff',
@@ -57,6 +62,7 @@
   #${DOM_ELEMENT_ID} {
     position: fixed;
     display: block;
+    z-index: 101;
     min-width: 150px;
     bottom: 0;
     left: 20px;
@@ -105,14 +111,12 @@
     cursor: pointer;
     outline: none;
     transition: filter 0.3s;
-    font-size: 0.9rem;
   }
 
   #${DOM_ELEMENT_ID} button.refresh {
     color: #fff;
     background-color: ${primaryColor};
     filter: saturate(0.8);
-    font-size: 0.9rem;
   }
 
   #${DOM_ELEMENT_ID} button.refresh:hover {
@@ -129,7 +133,6 @@
         margin: 0;
         margin-top: 10px;
         opacity: 0.8;
-        font-size: 0.9rem;
   }
 
   `;
@@ -183,10 +186,10 @@
 
   getMainScript = (doc) => {
     const scripts = [...doc.getElementsByTagName('script')];
-    const mainScript = scripts.filter((script) => script?.src?.includes('main.'))?.[0];
+    const mainScript = scripts.filter((script) => script?.src?.includes(ANGULAR_AND_REACT_MAIN_SCRIPT_PREFIX))?.[0];
     if (!mainScript) {
-      const appScript = scripts.filter((script) => script?.src?.includes('app.'))?.[0];
-      return appScript?.src;
+      const vueScript = scripts.filter((script) => script?.src?.includes(VUE_V2_MAIN_SCRIPT_PREFIX) || script?.src?.includes(VUE_V3_MAIN_SCRIPT_PREFIX))?.[0];
+      return vueScript?.src;
     }
 
     return mainScript?.src;

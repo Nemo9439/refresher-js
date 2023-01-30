@@ -71,11 +71,12 @@ and notify the active users to refresh their page in order to get the fresh vers
       
       > Whenever a new version is detected a custom event (`refresher-js-open-toast`) will be triggered (regardless of the value of data-disable-toast)
 
-      *Example Usage*
+      *Example Usage In Angular*
       ``` ts
-          document.addEventListener('refresher-js-open-toast', function () {
-          console.log('refresher-js-open-toast custom event was triggered');
-        });
+        @HostListener('document:refresher-js-open-toast')
+        sendRefresherEvent(): void {
+          console.log('send analytics event');
+        }
       ``` 
 
   - **data-custom-function-name** (String - Function Name): 
@@ -87,6 +88,26 @@ and notify the active users to refresh their page in order to get the fresh vers
 
       *Example  Usage*
       [angular-demo-with-custom-function-name](/demo/angular-demo-with-custom-callback/src/index.html)
+
+-----
+
+## Checking the notification locally
+ - configurating the script as described above
+ - set the script param`data-polling-interval-in-minutes` to 0.1 (just for testing purposes)
+ - start the web application which is running the script locally
+ - open the application as a user and leave the tab opened
+ - make a code change on the codebase and perform a full build for the application , the new build should result new compiled assets with new hash codes.
+ - reopen the application tab from earlier and perform a mouse click or tab change (to simulate active user)
+ - the notification should now appear
+
+
+## Notification with custom design
+**The script itself works with a predefined notification design , the color can be customized using the `data-primary-color` param.**  
+some applications would desire higher degree of customizations and in order to achieve that there are two options: 
+  - Style overriding on the existing notifier element design by adding global styling code.
+  - Disabling the notifier and managing the custom implemented notification by listening to the   
+  `refresher-js-open-toast` as described in the previous section.
+
 
 -----
 
