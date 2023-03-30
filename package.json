@@ -1,34 +1,35 @@
 {
-  "name": "refresher",
-  "version": "1.2.0",
-  "description": "Detects on client side that a new version of the application is available and notifying the active users to refresh their page",
-  "main": "refresher.js",
-  "scripts": {
-    "test": "test",
-    "build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.latest.min.js",
-    "start": "http-server -p 8081",
-    "angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o",
-    "angular-demo-custom-callback": "http-server -p 8080 demo/angular-demo-with-custom-callback/dist/angular-demo-with-custom-callback -o",
-    "react-demo": "http-server -p 8082 demo/react-demo/build -o",
-    "vue-demo": "http-server -p 8083 demo/vue-demo/dist -o",
-    "vue-demo2": "http-server -p 8083 demo/vue-demo2/dist -o"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Nemo9439/refresher-js.git"
-  },
-  "keywords": [
-    "version",
-    "update",
-    "notification",
-    "client",
-    "angular",
-    "web-application"
-  ],
-  "author": "Ohad Shivek",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Nemo9439/refresher-js/issues"
-  },
-  "homepage": "https://github.com/Nemo9439/refresher-js#readme"
+	"name": "refresher",
+	"version": "1.3.0",
+	"description": "Detects on client side that a new version of the application is available and notifying the active users to refresh their page",
+	"main": "refresher.js",
+	"scripts": {
+		"test": "test",
+		"build": "uglifyjs --compress --mangle -- refresher.js > dist/refresher.latest.min.js",
+		"start": "http-server -p 8081",
+		"angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o",
+		"angular-demo-custom-callback": "http-server -p 8080 demo/angular-demo-with-custom-callback/dist/angular-demo-with-custom-callback -o",
+		"angular-demo-lazy-loading": "http-server -p 8084 demo/angular-demo-lazy-loading/dist -o",
+		"react-demo": "http-server -p 8082 demo/react-demo/build -o",
+		"vue-demo": "http-server -p 8083 demo/vue-demo/dist -o",
+		"vue-demo2": "http-server -p 8083 demo/vue-demo2/dist -o"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Nemo9439/refresher-js.git"
+	},
+	"keywords": [
+		"version",
+		"update",
+		"notification",
+		"client",
+		"angular",
+		"web-application"
+	],
+	"author": "Ohad Shivek",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Nemo9439/refresher-js/issues"
+	},
+	"homepage": "https://github.com/Nemo9439/refresher-js#readme"
 }
