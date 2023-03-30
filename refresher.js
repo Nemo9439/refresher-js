@@ -268,8 +268,6 @@ class Refresher {
 
 		Refresher.subscribeToActivityEvents();
 
-		Refresher.openToast();
-
 		const intervalId = setInterval(async () => {
 			if (Refresher.getToastElement()) {
 				return;
