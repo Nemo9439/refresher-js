@@ -9,7 +9,7 @@
 		"start": "http-server -p 8081",
 		"angular-demo": "http-server -p 8080 demo/angular-demo/dist/angular-demo -o",
 		"angular-demo-custom-callback": "http-server -p 8080 demo/angular-demo-with-custom-callback/dist/angular-demo-with-custom-callback -o",
-		"angular-demo-lazy-loading": "http-server -p 8080 demo/angular-demo-lazy-loading/dist/angular-demo-with-custom-callback -o",
+		"angular-demo-lazy-loading": "http-server -p 8080 demo/angular-demo-lazy-loading/dist -o",
 		"react-demo": "http-server -p 8082 demo/react-demo/build -o",
 		"vue-demo": "http-server -p 8083 demo/vue-demo/dist -o",
 		"vue-demo2": "http-server -p 8083 demo/vue-demo2/dist -o"
