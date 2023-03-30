@@ -1,35 +1,57 @@
 "use strict";
 
-(function () {
-  const SECOND_IN_MS = 1000;
-  const MINUTE_IN_MS = 60 * SECOND_IN_MS;
-  const DOM_ELEMENT_ID = 'refresher-js-toast';
-  const SCRIPT_TAG_ID = 'refresher-js-script';
-  const OPEN_TOAST_EVENT_NAME = 'refresher-js-open-toast';
+class Refresher {
+	static SECOND_IN_MS = 1000;
+	static MINUTE_IN_MS = 60 * Refresher.SECOND_IN_MS;
+	static DOM_ELEMENT_ID = "refresher-js-toast";
+	static SCRIPT_TAG_ID = "refresher-js-script";
+	static OPEN_TOAST_EVENT_NAME = "refresher-js-open-toast";
 
-  const ANGULAR_AND_REACT_MAIN_SCRIPT_PREFIX = 'main.';
-  const VUE_V3_MAIN_SCRIPT_PREFIX = 'index.';
-  const VUE_V2_MAIN_SCRIPT_PREFIX = 'app.';
-  
-  
-  const DEFAULTS = {
-    PRIMARY_COLOR : '#004dff',
-    TITLE_TEXT: 'New version is available',
-    SUBTITLE_TEXT: 'Please refresh the page',
-    REFRESH_BUTTON_TEXT: 'Refresh',
-    POLLING_INTERVAL_IN_MINUTES: 120
-  }
+	static ANGULAR_AND_REACT_MAIN_SCRIPT_PREFIX = "main.";
+	static ANGULAR_LAZY_LOADING_SCRIPT_PREFIX = "runtime.";
+	static VUE_V3_MAIN_SCRIPT_PREFIX = "index.";
+	static VUE_V2_MAIN_SCRIPT_PREFIX = "app.";
+	static DEFAULTS = {
+		PRIMARY_COLOR: "#004dff",
+		TITLE_TEXT: "New version is available",
+		SUBTITLE_TEXT: "Please refresh the page",
+		REFRESH_BUTTON_TEXT: "Refresh",
+		POLLING_INTERVAL_IN_MINUTES: 120,
+	};
+	static configuration = {
+		pollingIntervalInMinutes: undefined,
+		titleText: undefined,
+		subTitleText: undefined,
+		primaryColor: undefined,
+		refreshButtonText: undefined,
+		disableToast: undefined,
+		customFunctionName: undefined,
+	};
 
-  let isUserActive = false;
+	static isUserActive = false;
 
-  createToastElement = () => {
-    const toastDiv = document.createElement('div');
+	static refresh() {
+		location.reload();
+	}
 
-    toastDiv.id = DOM_ELEMENT_ID;
+	static closeToast = () => {
+		const toastElement = Refresher.getToastElement();
 
-    const htmlTemplate = `
+		toastElement.classList.remove("opened");
+		setTimeout(() => {
+			toastElement.remove();
+		}, Refresher.SECOND_IN_MS);
+		Refresher.openToastLater();
+	};
+
+	static createToastElement = () => {
+		const toastDiv = document.createElement("div");
+
+		toastDiv.id = Refresher.DOM_ELEMENT_ID;
+
+		const htmlTemplate = `
                           <svg class="close-btn" viewPort="0 0 12 12" version="1.1"
-                                              xmlns="http://www.w3.org/2000/svg" onclick="closeToast()">
+                                              xmlns="http://www.w3.org/2000/svg" onclick="Refresher.closeToast()">
                                               <line x1="1" y1="11"
                                                     x2="11" y2="1"
                                                     stroke="black"
@@ -39,27 +61,27 @@
                                                     stroke="black"
                                                     stroke-width="2"/>
                             </svg>
-                        <h2>${titleText}</h2>
-                        <p>${subTitleText}</p>
+                        <h2>${Refresher.configuration.titleText}</h2>
+                        <p>${Refresher.configuration.subTitleText}</p>
                         <div class="buttons">
-                          <button class="refresh" onclick="refresh()">${refreshButtonText}</button>
+                          <button class="refresh" onclick="Refresher.refresh()">${Refresher.configuration.refreshButtonText}</button>
 
                 `;
 
-    toastDiv.innerHTML = htmlTemplate;
+		toastDiv.innerHTML = htmlTemplate;
 
-    document.body.appendChild(toastDiv);
-    appendCustomCss(toastDiv);
+		document.body.appendChild(toastDiv);
+		Refresher.appendCustomCss(toastDiv);
 
-    return toastDiv;
-  };
+		return toastDiv;
+	};
 
-  appendCustomCss = (element) => {
-    const style = document.createElement('style');
+	static appendCustomCss = (element) => {
+		const style = document.createElement("style");
 
-    element.appendChild(style);
-    style.innerHTML = `
-  #${DOM_ELEMENT_ID} {
+		element.appendChild(style);
+		style.innerHTML = `
+  #${Refresher.DOM_ELEMENT_ID} {
     position: fixed;
     display: block;
     z-index: 101;
@@ -72,17 +94,17 @@
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
     transition: 0.3s transform;
     border: 1px solid #efefef;
-    border-left: 5px solid ${primaryColor};
+    border-left: 5px solid ${Refresher.configuration.primaryColor};
     transform: translate(0, 100%);
     backdrop-filter: blur(10px);
     font-weight: lighter;
   }
 
-  #${DOM_ELEMENT_ID}.opened {
+  #${Refresher.DOM_ELEMENT_ID}.opened {
     transform: translate(0, -15%);
   }
 
-  #${DOM_ELEMENT_ID} .close-btn {
+  #${Refresher.DOM_ELEMENT_ID} .close-btn {
     position: absolute;
     right: 20px;
     top: 20px;
@@ -94,17 +116,17 @@
     z-index: 999;
   }
 
-  #${DOM_ELEMENT_ID} .close-btn:hover {
+  #${Refresher.DOM_ELEMENT_ID} .close-btn:hover {
     opacity: 1;
   }
 
-  #${DOM_ELEMENT_ID} .buttons {
+  #${Refresher.DOM_ELEMENT_ID} .buttons {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
   }
 
-  #${DOM_ELEMENT_ID} button {
+  #${Refresher.DOM_ELEMENT_ID} button {
     border-width: 0;
     padding: 8px 12px;
     border-radius: 4px;
@@ -113,162 +135,160 @@
     transition: filter 0.3s;
   }
 
-  #${DOM_ELEMENT_ID} button.refresh {
+  #${Refresher.DOM_ELEMENT_ID} button.refresh {
     color: #fff;
-    background-color: ${primaryColor};
+    background-color: ${Refresher.configuration.primaryColor};
     filter: saturate(0.8);
   }
 
-  #${DOM_ELEMENT_ID} button.refresh:hover {
+  #${Refresher.DOM_ELEMENT_ID} button.refresh:hover {
     filter: saturate(1)
   }
 
-  #${DOM_ELEMENT_ID} h2 {
+  #${Refresher.DOM_ELEMENT_ID} h2 {
     font-weight: lighter;
     margin: 0;
     padding-right: 40px;
   }
 
-  #${DOM_ELEMENT_ID} p {
+  #${Refresher.DOM_ELEMENT_ID} p {
         margin: 0;
         margin-top: 10px;
         opacity: 0.8;
   }
 
   `;
-  };
+	};
 
-  openToastLater = () => {
-    setTimeout(() => {
-      openToast();
-    }, pollingIntervalInMinutes * MINUTE_IN_MS);
-  };
+	static openToastLater = () => {
+		setTimeout(() => {
+			Refresher.openToast();
+		}, Refresher.configuration.pollingIntervalInMinutes * Refresher.MINUTE_IN_MS);
+	};
 
-  refresh = () => {
-    location.reload();
-  };
+	static openToast = () => {
+		Refresher.dispatchOpenToastEvent();
 
-  closeToast = () => {
-    const toastElement = getToastElement();
+		if (Refresher.getToastElement()) {
+			return;
+		}
 
-    toastElement.classList.remove('opened');
-    setTimeout(() => {
-      toastElement.remove();
-    }, SECOND_IN_MS);
-    openToastLater();
-  };
+		if (Refresher.configuration.disableToast) {
+			return;
+		}
 
-  openToast = () => {
-    dispatchOpenToastEvent();
+		const toastElement = Refresher.createToastElement();
 
-    if (getToastElement()) {
-      return;
-    }
-    
-    if(disableToast) {
-      return;
-    }
+		setTimeout(() => {
+			toastElement.classList.add("opened");
+		}, Refresher.SECOND_IN_MS);
+	};
 
-    const toastElement = createToastElement();
+	static getToastElement = () => {
+		return document.getElementById(Refresher.DOM_ELEMENT_ID);
+	};
 
-    setTimeout(() => {
-      toastElement.classList.add('opened');
-    }, SECOND_IN_MS);
-  };
+	static dispatchOpenToastEvent = () => {
+		document.dispatchEvent(new Event(Refresher.OPEN_TOAST_EVENT_NAME));
+	};
 
-  getToastElement = () => {
-    return document.getElementById(DOM_ELEMENT_ID);
-  };
+	static getMainScript = (doc) => {
+		const scripts = [...doc.getElementsByTagName("script")];
+		const mainScript = scripts.filter((script) =>
+			script?.src?.includes(Refresher.ANGULAR_AND_REACT_MAIN_SCRIPT_PREFIX)
+		)?.[0];
 
-  dispatchOpenToastEvent = () => {
-    document.dispatchEvent(new Event(OPEN_TOAST_EVENT_NAME));
-  }
+		if (!mainScript) {
+			const vueScript = scripts.filter(
+				(script) =>
+					script?.src?.includes(Refresher.VUE_V2_MAIN_SCRIPT_PREFIX) ||
+					script?.src?.includes(Refresher.VUE_V3_MAIN_SCRIPT_PREFIX)
+			)?.[0];
+			return vueScript?.src;
+		}
+		const polyfillsScriptName =
+			scripts.filter((script) => script?.src?.includes(Refresher.ANGULAR_LAZY_LOADING_SCRIPT_PREFIX))?.[0]?.src ?? "";
+		const mainScriptName = mainScript?.src;
 
-  getMainScript = (doc) => {
-    const scripts = [...doc.getElementsByTagName('script')];
-    const mainScript = scripts.filter((script) => script?.src?.includes(ANGULAR_AND_REACT_MAIN_SCRIPT_PREFIX))?.[0];
-    if (!mainScript) {
-      const vueScript = scripts.filter((script) => script?.src?.includes(VUE_V2_MAIN_SCRIPT_PREFIX) || script?.src?.includes(VUE_V3_MAIN_SCRIPT_PREFIX))?.[0];
-      return vueScript?.src;
-    }
+		return mainScriptName + polyfillsScriptName;
+	};
 
-    return mainScript?.src;
-  };
+	static getRefresherScriptTag = () => {
+		return document.getElementById(Refresher.SCRIPT_TAG_ID);
+	};
 
-  getRefresherScriptTag = () => {
-    return document.getElementById(SCRIPT_TAG_ID);
-  };
+	static handleCustomFunction = async () => {
+		const customFunctionRes = await window[customFunctionName]();
+		if (customFunctionRes) {
+			Refresher.openToast();
+			clearInterval(intervalId);
+		}
+		return;
+	};
 
-  handleCustomFunction = async () => {
-      const customFunctionRes = await window[customFunctionName]();
-      if (customFunctionRes) {
-        openToast();
-        clearInterval(intervalId);
-      }
-      return;
-  }
+	static subscribeToActivityEvents = () => {
+		document.onvisibilitychange = () => {
+			if (document.visibilityState === "visible") {
+				Refresher.isUserActive = true;
+			}
+		};
 
-  subscribeToActivityEvents = () => {
-    document.onvisibilitychange = () => {
-      if (document.visibilityState === 'visible') {
-        isUserActive = true;
-      }
-    };
+		onclick = () => {
+			Refresher.isUserActive = true;
+		};
+	};
 
-    onclick = () => {
-      isUserActive = true;
-    };
-  };
+	static init() {
+		const xhttp = new XMLHttpRequest();
 
-  const xhttp = new XMLHttpRequest();
+		xhttp.onload = (data) => {
+			const doc = new DOMParser().parseFromString(data.target.response, "text/html");
 
-  xhttp.onload = (data) => {
-    const doc = (new DOMParser).parseFromString(data.target.response, "text/html");
+			const nextMainScript = Refresher.getMainScript(doc);
+			if (currentMainScript !== nextMainScript) {
+				Refresher.openToast();
+				clearInterval(intervalId);
+				currentMainScript = nextMainScript;
+			}
+		};
+		const scriptTag = Refresher.getRefresherScriptTag();
+		const { DEFAULTS } = Refresher;
+		Refresher.configuration.pollingIntervalInMinutes =
+			Number(scriptTag.getAttribute("data-polling-interval-in-minutes")) ?? DEFAULTS.POLLING_INTERVAL_IN_MINUTES;
+		Refresher.configuration.titleText = scriptTag.getAttribute("data-title-text") ?? DEFAULTS.TITLE_TEXT;
+		Refresher.configuration.subTitleText = scriptTag.getAttribute("data-subtitle-text") ?? DEFAULTS.SUBTITLE_TEXT;
+		Refresher.configuration.primaryColor = scriptTag.getAttribute("data-primary-color") ?? DEFAULTS.PRIMARY_COLOR;
+		Refresher.configuration.refreshButtonText =
+			scriptTag.getAttribute("data-refresh-button-text") ?? DEFAULTS.REFRESH_BUTTON_TEXT;
+		Refresher.configuration.disableToast = scriptTag.getAttribute("data-disable-toast") === "true";
+		Refresher.configuration.customFunctionName = scriptTag.getAttribute("data-custom-function-name");
 
-    const nextMainScript = getMainScript(doc);
-    if(currentMainScript !== nextMainScript) {
-      openToast();
-      clearInterval(intervalId);
-      currentMainScript = nextMainScript;
-    }
+		const pollingResourceSrc = window.location.href;
+		let currentMainScript = Refresher.getMainScript(window.document);
 
-  };
+		Refresher.subscribeToActivityEvents();
 
-  const scriptTag = getRefresherScriptTag();
+		Refresher.openToast();
 
-  const pollingIntervalInMinutes = Number(scriptTag.getAttribute('data-polling-interval-in-minutes')) ?? DEFAULTS.POLLING_INTERVAL_IN_MINUTES;
-  const titleText = scriptTag.getAttribute('data-title-text') ?? DEFAULTS.TITLE_TEXT;
-  const subTitleText = scriptTag.getAttribute('data-subtitle-text') ?? DEFAULTS.SUBTITLE_TEXT;
-  const primaryColor = scriptTag.getAttribute('data-primary-color') ?? DEFAULTS.PRIMARY_COLOR;
-  const refreshButtonText = scriptTag.getAttribute('data-refresh-button-text') ?? DEFAULTS.REFRESH_BUTTON_TEXT;
-  const disableToast = scriptTag.getAttribute('data-disable-toast') === 'true';
-  const customFunctionName = scriptTag.getAttribute('data-custom-function-name');
+		const intervalId = setInterval(async () => {
+			if (Refresher.getToastElement()) {
+				return;
+			}
 
-  const pollingResourceSrc = window.location.href;
-  let currentMainScript = getMainScript(window.document)
+			if (!Refresher.isUserActive) {
+				return;
+			}
 
-  subscribeToActivityEvents();
+			Refresher.isUserActive = false;
 
-  const intervalId = setInterval(async () => {
-    if (getToastElement()) {
-      return;
-    }
+			if (Refresher.configuration.customFunctionName) {
+				return await Refresher.handleCustomFunction();
+			}
 
-    if (!isUserActive) {
-      return;
-    }
+			xhttp.open("GET", pollingResourceSrc);
+			xhttp.send();
+		}, Refresher.configuration.pollingIntervalInMinutes * Refresher.MINUTE_IN_MS);
+	}
+}
 
-    isUserActive = false;
-    
-    if(customFunctionName) {
-      return await handleCustomFunction();
-    }
-
-    xhttp.open('GET', pollingResourceSrc);
-    xhttp.send();
-
-
-  }, pollingIntervalInMinutes * MINUTE_IN_MS);
-})();
-
-
+Refresher.init();
