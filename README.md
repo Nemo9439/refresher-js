@@ -114,7 +114,7 @@ some applications would desire higher degree of customizations and in order to a
 
 ## Lazy Loading
 
-lazy loading is currently supported only in angular.
+lazy loading is currently supported only in Angular and React.
 
 ---
 
